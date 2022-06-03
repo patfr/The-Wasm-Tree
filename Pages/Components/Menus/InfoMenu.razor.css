@@ -1,0 +1,25 @@
+﻿#header {
+    display: flex;
+    margin: -20px;
+    margin-bottom: 0;
+    background: #373737;
+    align-items: center;
+}
+
+#title {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    margin-left: 10px;
+}
+
+#footer {
+    display: flex;
+}
+
+.discord {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+}

@@ -1,0 +1,40 @@
+﻿@namespace WasmTree.Pages.Components.Menus
+@using WasmTree.Data
+@using WasmTree.Data.Technical
+@using WasmTree.Pages
+@page "/InfoMenu"
+
+
+<div class="menu-header">
+    <div id="header">
+        <div id="title">
+            <h2>@Mod.ExternalName</h2>
+            <h4>v@(Mod.CurrentVersion.ExternalVersion): @Mod.CurrentVersion.ExternalName</h4>
+        </div>
+    </div>
+</div>
+
+<div class="menu-body">
+    <div>By @Mod.Author</div><br />
+    <div>Made in @(Framework.ExternalName), by patfr and is based on Profectus by thepaperpilot</div><br />
+    <div class="glow" @onclick=WasmTree.Pages.Index.ToggleFrameworkChangelogInfo>Changelog for @(Framework.ExternalName)</div>
+    <div class="glow" @onclick=WasmTree.Pages.Index.ToggleModChangelogInfo>Changelog for @Mod.ExternalName</div><br />
+    <div class="glow"><a href="https://discord.gg/7ahtMyv5hX" target="_blank" class="discord"><span class="material-icons" style="margin: 0; margin-right: 4px;">discord</span> Patfr's Server</a></div>
+    <div class="glow"><a href="https://discord.gg/WzejVAx" target="_blank" class="discord"><span class="material-icons" style="margin: 0; margin-right: 4px;">discord</span> The Paper Pilot Community</a></div>
+    <div class="glow"><a href="https://discord.gg/F3xveHV" target="_blank" class="discord"><span class="material-icons" style="margin: 0; margin-right: 4px;">discord</span> The Modding Tree</a></div><br />
+    <div>Time Played: @WasmTree.Pages.Index.FormatTime(WasmTree.Pages.Index.PlayTime)</div><br />
+</div>
+
+<div class="menu-footer">
+    <div class="footerGrow"></div>
+    <button class="close glow" @onclick=WasmTree.Pages.Index.ToggleInfo> Close </button>
+</div>
+
+@code {
+    private void Render(object? sender, EventArgs e) => InvokeAsync(() => StateHasChanged());
+
+    protected override void OnInitialized()
+    {
+        Events.Render += Render;
+    }
+}

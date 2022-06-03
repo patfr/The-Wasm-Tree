@@ -1,0 +1,33 @@
+﻿#upgrade {
+    width: 116px;
+    height: 116px;
+    border: 2px solid rgba(0,0,0,.125);
+}
+
+    #upgrade.can:hover {
+        transform: scale(1.1, 1.1);
+        box-shadow: white 0px 0px 10px;
+        cursor: pointer;
+    }
+
+    #upgrade.locked {
+        cursor: not-allowed;
+    }
+
+    #upgrade:first-child {
+        border-radius: 4px 0 0 4px;
+    }
+
+    #upgrade:last-child {
+        border-radius: 0 4px 4px 0;
+    }
+
+.text {
+    color: #171717;
+    font-size: 10px;
+    margin: 0;
+}
+
+.text.title {
+    font-size: 14px;
+}

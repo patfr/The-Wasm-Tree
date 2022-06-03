@@ -1,0 +1,38 @@
+﻿@namespace WasmTree.Pages.Components.Menus
+@using WasmTree.Data
+@using WasmTree.Pages
+@using WasmTree.Data.Technical
+@page "/SettingsMenu"
+
+<div class="menu-header">
+    <div id="header">
+        <div id="title">
+            <h2>Settings</h2>
+        </div>
+    </div>
+</div>
+
+<div class="menu-body">
+    <label class="field">
+        <input type="checkbox" class="toggle" @bind=WasmTree.Pages.Index.ShowUpdateTps />
+        <span>Show Update TPS</span>
+    </label>
+    <label class="field">
+        <input type="checkbox" class="toggle" @bind=WasmTree.Pages.Index.ShowRenderTps />
+        <span>Show Render TPS</span>
+    </label>
+</div>
+
+<div class="menu-footer">
+    <div class="footerGrow"></div>
+    <button class="close glow" @onclick=WasmTree.Pages.Index.ToggleSettings> Close </button>
+</div>
+
+@code {
+    private void Render(object? sender, EventArgs e) => InvokeAsync(() => StateHasChanged());
+
+    protected override void OnInitialized()
+    {
+        Events.Render += Render;
+    }
+}

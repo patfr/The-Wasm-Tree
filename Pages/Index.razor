@@ -1,0 +1,185 @@
+﻿@namespace WasmTree.Pages
+@using WasmTree.Pages.Components.Common
+@using WasmTree.Pages.Components.Menus
+@using WasmTree.Pages.Components.Layer
+@using WasmTree.Data.Interfaces
+@using WasmTree.Data.Technical
+@using WasmTree.Data.Common
+@using WasmTree.Data
+@page "/"
+
+<div id="content" style="background:#171717">
+    @if (Initialized)
+    {
+        <PageTitle>WASM - Tree</PageTitle>
+
+        @if (ChangelogOpen)
+        {
+            <div class="menu-mask">
+                <div class="menu-wrapper">
+                    <div class="menu-container">
+                        <ChangelogMenu />
+                    </div>
+                </div>
+            </div>
+        }
+        @if (InfoOpen)
+        {
+            <div class="menu-mask">
+                <div class="menu-wrapper">
+                    <div class="menu-container">
+                        <InfoMenu />
+                    </div>
+                </div>
+            </div>
+        }
+        @if (SettingsOpen)
+        {
+            <div class="menu-mask">
+                <div class="menu-wrapper">
+                    <div class="menu-container">
+                        <SettingsMenu />
+                    </div>
+                </div>
+            </div>
+        }
+        <div id="tps-container">
+            @if (ShowUpdateTps)
+            {
+                <div class="tps">Update TPS: @CalcTps(AverageUpdateTime)</div>
+            }
+            @if (ShowRenderTps)
+            {
+                <div class="tps">Render TPS: @CalcTps(AverageRenderTime)</div>
+            }
+        </div>
+    
+        <div id="nav">
+            <div id="title"><b>@Mod.ExternalName</b></div>
+            <div id="version" class="instant" @onclick=ToggleModChangelog><span>v@(Mod.CurrentVersion.ExternalVersion)</span></div>
+            <div style="flex-grow: 1; height: 46px"></div>
+            <div id="version" class="instant" @onclick=ToggleFrameworkChangelog><span>Framework: v@(Framework.CurrentVersion.ExternalVersion)</span></div>
+            <div id="version" class="instant" style="margin-left: 25px"></div>
+            <div class="icons">
+                <div class="icon material-icons" @onclick=ToggleInfo>info</div>
+            </div>
+            <div class="icons">
+                <div class="icon material-icons" @onclick=ToggleSettings>settings</div>
+            </div>
+        </div>
+        <div id="views">
+            @if (TreeOpen)
+            {
+                <div class="view instant" style="flex-basis: 600px; min-width: 600px">
+                    <div class="inner-view">
+                        <div class="layer-tab">
+                            <div class="layer">
+                                <ResourceDisplay Data=Mod.Points />
+                                <div style="width: 8px; height: 17px;"></div>
+                                <span class="tree-row" style="margin: 50px auto">
+                                    @if (Layers.Value is not null)
+                                    {
+                                        @foreach (KeyValuePair<string, ICompute<ILayerTemplate>> l in Layers.Value)
+                                        {
+                                            <TreeNode Layer=@(l.Value.Value) />
+                                        }
+                                    }
+                                </span>
+                            </div>
+                            <button class="minimize" @onclick=ToggleTree> ▼ </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="view instant" style="flex-grow: 0; flex-shrink: 0; width: 60px; margin: 0px;">
+                    <div class="inner-view">
+                        <div class="layer-tab">
+                            <button class="layer minimized" @onclick=ToggleTree>
+                                <div>Tree</div>
+                            </button>
+                            <button class="minimize"> ▼ </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (LayerOpen)
+            {
+                <div class="view instant" style="flex-basis: 600px; min-width: 600px">
+                    <div class="inner-view" style="border-left: 4px solid #272727;">
+                        <div class="layer-tab">
+                            <div class="layer">
+                                @if (Layers.Value is not null)
+                                {
+                                    @if (Layers.Value.ContainsKey(Mod.CurrentLayer))
+                                    {
+                                        object[] l = Layers?.Value?[Mod.CurrentLayer]?.Value?.Display?.Value ?? Array.Empty<object>();
+                                        @foreach (object o in l)
+                                        {
+                                            @if (o is ICompute<ResourceDisplayData>)
+                                            {
+                                                <ResourceDisplay Data=@(((ICompute<ResourceDisplayData>)o).Value) />
+                                                continue;
+                                            }
+                                            @if (o is ICompute<BlankData>)
+                                            {
+                                                <Blank Data=@(((ICompute<BlankData>)o).Value) />
+                                                continue;
+                                            }
+                                            @if (o is ICompute<ResetButtonData>)
+                                            {
+                                                <ResetButton Data=@(((ICompute<ResetButtonData>)o).Value) />
+                                                continue;
+                                            }
+                                            @if (o is ICompute<UpgradeData>)
+                                            {
+                                                <Upgrade Data=@(((ICompute<UpgradeData>)o).Value) />
+                                                continue;
+                                            }
+                                            @if (o is ICompute<RowData<IRowComponent>>)
+                                            {
+                                                <div style="display:flex;justify-content: center;">
+                                                    @foreach (KeyValuePair<string, IRowComponent> u in ((ICompute<RowData<IRowComponent>>)o).Value?.Values ?? new Dictionary<string, IRowComponent>())
+                                                    {
+                                                        @if (u.Value is UpgradeData)
+                                                        {
+                                                            <Upgrade Data=(UpgradeData)u.Value Style="margin:0" />
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                        }
+                                    } 
+                                }
+                            </div>
+                            <button class="minimize" @onclick=ToggleLayer> ▼ </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="view instant" style="flex-grow: 0; flex-shrink: 0; width: 60px; margin: 0px;">
+                    <div class="inner-view" style="border-left: 4px solid #272727;">
+                        <div class="layer-tab">
+                            <button class="layer minimized" @onclick=ToggleLayer>
+                                <div>Layer</div>
+                            </button>
+                            <button class="minimize"> ▼ </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    } 
+    else 
+    {
+        <PageTitle>Loading</PageTitle>
+
+        <div id="loading" style="display: flex">
+            <h1>Loading...</h1>
+            This can take a while. If this takes more than 30 seconds there's something wrong.
+        </div>
+    }
+</div>

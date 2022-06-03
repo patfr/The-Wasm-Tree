@@ -1,0 +1,8 @@
+﻿@namespace WasmTree.Pages.Components.Layer
+@page "/Upgrade"
+
+<div id="upgrade" @onclick=StandardBuy class=@_class style="@Style;background:@_color;display:flex;flex-direction:column;justify-content: center;">
+    <div class="text title">@_title</div>
+    <div class="text">@_desc</div><br />
+    <div class="text">Cost: @_cost?.FormatDec(_resource?.Precision) @_resource?.Name</div>
+</div>

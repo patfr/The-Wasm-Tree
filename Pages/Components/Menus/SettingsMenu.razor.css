@@ -1,0 +1,90 @@
+﻿#header {
+    display: flex;
+    margin: -20px;
+    margin-bottom: 0;
+    background: #373737;
+    align-items: center;
+}
+
+#title {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    margin-left: 10px;
+}
+
+#footer {
+    display: flex;
+}
+
+.menu-body > * {
+    display: flex;
+    position: relative;
+    min-height: 2em;
+    margin: 5px 0;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.field input {
+    appearance: none;
+    pointer-events: none;
+}
+
+.field span {
+    width: 100%;
+    position: relative;
+}
+
+.field > * {
+    margin: 0;
+}
+
+input + span::before {
+    content: "";
+    float: right;
+    margin: 5px 0 5px 10px;
+    border-radius: 7px;
+    width: 36px;
+    height: 14px;
+    background-color: #474747;
+    opacity: .38;
+    vertical-align: top;
+    transition: background-color .2s,opacity .2s;
+}
+
+input + span::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 16px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #474747;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    transition: background-color .2s,transform .2s;
+}
+
+input:checked + span::before {
+    background-color: #575757;
+    opacity: .6;
+}
+
+input:checked + span::after {
+    background-color: #575757;
+    transform: translateX(16px);
+}
+
+.menu-body hr {
+    width: 100%;
+    height: 0;
+    display: block;
+    position: relative;
+    min-height: 0;
+    margin: 0;
+    justify-content: initial;
+    align-items: initial;
+    cursor: initial;
+}

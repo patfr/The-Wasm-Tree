@@ -1,0 +1,103 @@
+﻿@namespace WasmTree.Pages.Components.Menus
+@using WasmTree.Data
+@using WasmTree.Data.Technical
+@using WasmTree.Data.Versions;
+@using WasmTree.Pages
+@page "/ChangelogMenu"
+
+<div class="menu-header">
+    <div id="header">
+        <div id="title">
+            <h2 style="margin: 0">Changelog</h2>
+            @if (WasmTree.Pages.Index.ChangelogType == "Mod")
+            {
+                <h3>@(Mod.ExternalName): v@(Mod.CurrentVersion.ExternalVersion) - @Mod.CurrentVersion.ExternalName</h3>
+            }
+            else
+            {
+                <h3>@(Framework.ExternalName): v@(Framework.CurrentVersion.ExternalVersion) - @Framework.CurrentVersion.ExternalName</h3>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="menu-body">
+    @if (WasmTree.Pages.Index.ChangelogType == "Mod")
+    {
+        @foreach (KeyValuePair<string, VersionData> c in Mod.ChangeLog)
+        {
+            @if (Mod.CurrentVersion.ExternalVersion == c.Value.ExternalVersion)
+            {
+                <details open>
+                    <summary>v@(c.Value.ExternalVersion) @(c.Value.ExternalName) - @($"{c.Value.VersionDate:D}")</summary>
+                    <ul>
+                        @for (int j = 0; j < c.Value.Changes?.Length; j++)
+                        {
+                            int tmp = j;
+                            <li class="@(c.Value.Changes[tmp].Type)">@c.Value.Changes[tmp].Description</li>
+                        }
+                    </ul>
+                </details>
+            }
+            else
+            {
+                <details closed>
+                    <summary>v@(c.Value.ExternalVersion) @(c.Value.ExternalName) - @($"{c.Value.VersionDate:D}")</summary>
+                    <ul>
+                        @for (int j = 0; j < c.Value.Changes?.Length; j++)
+                        {
+                            int tmp = j;
+                            <li class="@(c.Value.Changes[tmp].Type)">@c.Value.Changes[tmp].Description</li>
+                        }
+                    </ul>
+                </details>
+            }
+        }
+    }
+    else
+    {
+        @foreach (KeyValuePair<string, VersionData> c in Framework.ChangeLog)
+        {
+            @if (Framework.CurrentVersion.ExternalVersion == c.Value.ExternalVersion)
+            {
+                <details open>
+                    <summary>v@(c.Value.ExternalVersion) @(c.Value.ExternalName) - @($"{c.Value.VersionDate:D}")</summary>
+                    <ul>
+                        @for (int j = 0; j < c.Value.Changes?.Length; j++)
+                        {
+                            int tmp = j;
+                            <li class="@(c.Value.Changes[tmp].Type)">@c.Value.Changes[tmp].Description</li>
+                        }
+                    </ul>
+                </details>
+            }
+            else
+            {
+                <details closed>
+                    <summary>v@(c.Value.ExternalVersion) @(c.Value.ExternalName) - @($"{c.Value.VersionDate:D}")</summary>
+                    <ul>
+                        @for (int j = 0; j < c.Value.Changes?.Length; j++)
+                        {
+                            int tmp = j;
+                            <li class="@(c.Value.Changes[tmp].Type)">@c.Value.Changes[tmp].Description</li>
+                        }
+                    </ul>
+                </details>
+            }
+        }
+    }
+</div>
+
+<div class="menu-footer">
+    <div class="footerGrow"></div>
+    <button class="close glow" @onclick=WasmTree.Pages.Index.ToggleModChangelog> Close </button>
+</div>
+
+@code {
+    private void Render(object? sender, EventArgs e) => InvokeAsync(() => StateHasChanged());
+
+    protected override void OnInitialized()
+    {
+        Events.Render += Render;
+    }
+}

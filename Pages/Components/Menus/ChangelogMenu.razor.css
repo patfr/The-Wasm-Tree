@@ -1,0 +1,84 @@
+﻿#header {
+    display: flex;
+    margin: -20px;
+    margin-bottom: 0;
+    background: #373737;
+    align-items: center;
+}
+
+#title {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    margin-left: 10px;
+}
+
+#footer {
+    display: flex;
+}
+
+.menu-body details {
+    margin: 10px 0;
+    padding-left: 18px;
+}
+
+    .menu-body details summary {
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-left: -18px;
+    }
+
+    .menu-body details ul {
+        margin: 5px 0;
+        background: #474747;
+        border: 2px solid rgba(0,0,0,.125);
+        padding: 5px 5px 5px 15px;
+        list-style: inside;
+    }
+
+        .menu-body details ul li {
+            margin: 8px 0;
+            list-style: inside;
+        }
+
+            .menu-body details ul li::before {
+                padding: 2px 8px;
+                margin-right: 8px;
+                border-radius: 4px;
+            }
+
+li.Added::before {
+    content: "Added";
+    background: #67cf81;
+    color: #171717;
+}
+
+li.Changed::before {
+    content: "Changed";
+    background: #e6a54c;
+    color: #171717;
+}
+
+li.Removed::before {
+    content: "Removed";
+    background: #e6544c;
+    color: #171717;
+}
+
+li.Fixed::before {
+    content: "Fixed";
+    background: #ede572;
+    color: #171717;
+}
+
+li.Breaking::before {
+    content: "Breaking";
+    background: #9c1717;
+    color: #171717;
+}
+
+li.Balancing::before {
+    content: "Balancing";
+    background: #debf37;
+    color: #171717;
+}

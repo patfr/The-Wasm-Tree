@@ -1,0 +1,7 @@
+﻿@namespace WasmTree.Pages.Components.Layer
+@page "/ResetButton"
+
+<div id="resetButton" class="@_class" style="background:@_color;display:flex;flex-direction:column;justify-content: center;" @onclick=Reset>
+    <div class="text">Reset for @_actual?.FormatDec() @_gain</div>
+    <div class="text"><br />Next: @_next?.FormatDec() @_base</div>
+</div>

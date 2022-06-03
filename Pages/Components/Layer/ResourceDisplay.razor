@@ -1,0 +1,12 @@
+﻿@namespace WasmTree.Pages.Components.Layer
+@page "/ResourceDisplay"
+
+<div>
+    <span>You have </span>
+    <h2 style="color:@_color;@(_glow ? $"text-shadow:0 0 10px {_color}" : "")">@($"{_resource?.Value.FormatDec(_precisionOverride, _formatOverride)}")</h2>
+    <span> @_resource?.Name</span><br />
+    @if (_showGain ?? false)
+    {
+        @($"({_resource?.Gain?.Value?.FormatDec(_precisionOverride, _formatOverride)}/s)")
+    }
+</div>

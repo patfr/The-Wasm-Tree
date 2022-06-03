@@ -19,7 +19,7 @@ jobs:
       run: dotnet publish 'WasmTree.csproj' -c Release -o release --nologo
       
     - name: Change base-tag in index.html from / to Wasm-Game-Test
-      run: sed -i 's/<base href="\/" \/>/<base href="\/Wasm-Game-Test\/" \/>/g' release/wwwroot/index.html
+      run: sed -i 's/<base href="\/" \/>/<base href="\/The-Wasm-Tree\/" \/>/g' index.html
       
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
